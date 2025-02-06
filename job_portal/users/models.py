@@ -85,9 +85,18 @@ class TemporaryUser(models.Model):
 # ================================
 class EmployerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='vendor_profile')
-    
+    company = models.CharField(max_length = 25,blank=True, null=True)
+    credit = models.IntegerField(default = 50)
+    location = models.CharField(max_length = 20, blank = True, null = True)
+    size = models.IntegerField(default = 0) 
+    gdp_number = models.CharField(max_length= 20, blank = True)   
     is_approved = models.BooleanField(default = False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.company and self.user:
+            self.company = self.user.first_name
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Vendor Profile: {self.user.email}"

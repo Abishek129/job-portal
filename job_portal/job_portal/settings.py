@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'razorpay',
     # Custom apps
     'users',
+    'employer'
     
 ]
 
