@@ -105,9 +105,25 @@ class EmployerProfile(models.Model):
 # CustomerProfile Model
 # ================================
 class CandidateProfile(models.Model):
+    QUALIFICATION_CHOICES = [
+        ('anyone', 'Anyone'),
+        ('tenth', 'Tenth'),
+        ('diploma/twelfth', 'Diploma/Twelfth'),
+        ('graduation', 'Graduation'),
+        ('postgraduation', 'Post Graduation')
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile')
     date_of_birth = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')], blank=True, null=True)
+    qualification = models.CharField(
+        max_length=20,
+        choices=QUALIFICATION_CHOICES,
+        default='anyone'    
+    )
+    current_location = models.CharField(max_length=30, blank = True, null = True)
+    is_employed = models.BooleanField(default = False)
+    is_student = models.BooleanField(default = False)
+    
 
     def __str__(self):
         return f"Customer Profile: {self.user.email}"
